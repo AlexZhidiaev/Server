@@ -26,7 +26,7 @@ Then, run server
 
     $ uvicorn main:app --reload
 
-`reload` allows you to change the source code.
+`reload` allows you to change the source code while running it.
 
 By default settings your server will be located at http://127.0.0.1:8000, but you can change its port, e.g.
 
