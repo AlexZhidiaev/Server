@@ -13,9 +13,12 @@ This project was made for only one purpose  - to test my skills and find out if 
 ## Usage
 My server is able to execute 3 tasks:
 
--Query, that returns the current day of the week (on server) 
--Query, that returns the day of the week by entered date (year+month+day)
--Query, that returns the day of the week after entered time interval (days+hours+minutes+seconds)
+
+- Query, that returns the current day of the week (on server) 
+
+- Query, that returns the day of the week by entered date (year+month+day)
+
+- Query, that returns the day of the week after entered time interval (days+hours+minutes+seconds)
 
 First, ensure you have a python interpreter, that supports python 3+.
 
