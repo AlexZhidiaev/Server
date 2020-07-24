@@ -1,5 +1,5 @@
 from datetime import datetime, date, timedelta
-
+from time import time
 from fastapi import FastAPI
 
 from googletrans import Translator
@@ -13,18 +13,18 @@ def home():
 
 
 @app.get('/return/day')
-def return_day():
+def return_day(language: str = 'en'):
     """
     Функция, возвращающая текущий день недели на сервере.
 
     :return: строка, возвращающая день недели.
     """
-    out: str = string_proc(datetime.now)
+    out: str = string_proc(datetime.now(), language)
     return out
 
 
 @app.post('/DbD')
-def day_by_date(input_str: str):
+def day_by_date(input_str: str, language: str = 'en'):
     """
     Функция, возвращающая день недели указанного в параметрах дня.
 
@@ -33,13 +33,13 @@ def day_by_date(input_str: str):
     """
     input_arr = input_str.split("/")
     out_date: date = date(int(input_arr[2]), int(input_arr[1]), int(input_arr[0]))
-    out: str = string_proc(out_date)
+    out: str = string_proc(out_date, language)
     return out
 
 
 @app.get('/DbaD')
 def day_by_added_date(year: int = 0, month: int = 0, week: int = 0, day: int = 0, hour: int = 0, minute: int = 0,
-                      second: int = 0):
+                      second: int = 0, language: str = 'en'):
     """
     Функция, возвращающая день недели через указанное в параметрах время от текущей даты.
 
@@ -50,6 +50,7 @@ def day_by_added_date(year: int = 0, month: int = 0, week: int = 0, day: int = 0
     :param hour: час.
     :param minute: минуты.
     :param second: секунды.
+    :param language: язык возвращаемой строки
     :return: строка, возвращающая день недели .
     """
     if year:
@@ -58,7 +59,7 @@ def day_by_added_date(year: int = 0, month: int = 0, week: int = 0, day: int = 0
         week += month * 4
 
     dn = datetime.now() + timedelta(weeks=week, days=day, hours=hour, minutes=minute, seconds=second)
-    out: str = string_proc(dn)
+    out: str = string_proc(dn, language)
     return out
 
 
@@ -97,12 +98,14 @@ def leap_count(year: int):
     return count
 
 
-def string_proc(date: datetime):
+def string_proc(dt: datetime, language: str):
     """
     Функция, возвращающая строковое представление дня недели указанной даты.
 
     :param date: дата, день недели которой требуется вернуть.
     :return:  строка, возвращающая день недели.
     """
-    date_str: str = date.strftime('%A')
+    date_str: str = dt.strftime('%A')
+    translator = Translator()
+    date_str = translator.translate(date_str, dest=language).text
     return date_str
