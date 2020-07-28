@@ -2,6 +2,7 @@ from datetime import datetime, date, timedelta
 from time import time
 from fastapi import FastAPI
 
+
 from googletrans import Translator
 
 app = FastAPI()
@@ -92,7 +93,7 @@ def leap_count(year: int):
     """
     now = int(datetime.now().strftime('%Y'))
     count: int = 0
-    for i in range(now, now + year):
+    for i in range(now, year):
         if leap_year(i):
             count += 1
     return count
