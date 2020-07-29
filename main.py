@@ -1,3 +1,4 @@
+import math
 from datetime import datetime, date, timedelta
 from time import time
 
@@ -55,8 +56,11 @@ def day_by_added_date(year: int = 0, month: int = 0, week: int = 0, day: int = 0
     :param language: язык возвращаемой строки в сокращенном формате
     :return: строка, возвращающая день недели .
     """
-    if year:
-        day += year * 365 + leap_count(year)
+    if math.fabs(year) < 7980:
+        day += math.fabs(year) * 365 + leap_count(year)
+    else:
+        return "год не может принимать такое значение"
+
     if month:
         week += month * 4
 
