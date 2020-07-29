@@ -1,8 +1,8 @@
 from datetime import datetime, date, timedelta
 from time import time
+
+import googletrans
 from fastapi import FastAPI
-
-
 from googletrans import Translator
 
 app = FastAPI()
@@ -17,7 +17,7 @@ def home():
 def return_day(language: str = 'en'):
     """
     Функция, возвращающая текущий день недели на сервере.
-
+    :param language : язык возвращаемой строки в сокращенном формате
     :return: строка, возвращающая день недели.
     """
     out: str = string_proc(datetime.now(), language)
@@ -30,6 +30,7 @@ def day_by_date(input_str: str, language: str = 'en'):
     Функция, возвращающая день недели указанного в параметрах дня.
 
     :param input_str: строка формата день/месяц/год.
+    :param language : язык возвращаемой строки в сокращенном формате
     :return: строка, возвращающая день недели.
     """
     input_arr = input_str.split("/")
@@ -51,7 +52,7 @@ def day_by_added_date(year: int = 0, month: int = 0, week: int = 0, day: int = 0
     :param hour: час.
     :param minute: минуты.
     :param second: секунды.
-    :param language: язык возвращаемой строки
+    :param language: язык возвращаемой строки в сокращенном формате
     :return: строка, возвращающая день недели .
     """
     if year:
@@ -71,7 +72,7 @@ def leap_year(year: int):
     :param year: год, проверяемый на високосность.
     :return: истина, если викосоный, ложь, если нет.
     """
-    if 0 < year < 9999:
+    if year:
         if year % 4 == 0:
             if year % 100 == 0:
                 if year % 400 == 0:
@@ -86,16 +87,21 @@ def leap_year(year: int):
 
 def leap_count(year: int):
     """
-    Функция, возвращающая количество високосных лет в интервале от текущего до указанного в параметре года.
+    Функция, возвращающая количество високосных лет за количество лет от текущего года, передаваемое в параметре
 
-    :param year: год, до которого нужно подсчитать количество високосных.
+    :param year: количество лет от текущего, для которого нужно подсчитать число високосных
     :return: число високосных лет.
     """
     now = int(datetime.now().strftime('%Y'))
     count: int = 0
-    for i in range(now, year):
-        if leap_year(i):
-            count += 1
+    if year >= 0:
+        for i in range(now, now + year):
+            if leap_year(i):
+                count += 1
+    elif year < 0:
+        for i in range(now + year, now):
+            if leap_year(i):
+                count += 1
     return count
 
 
@@ -103,10 +109,14 @@ def string_proc(dt: datetime, language: str):
     """
     Функция, возвращающая строковое представление дня недели указанной даты.
 
-    :param date: дата, день недели которой требуется вернуть.
+    :param dt: дата, день недели которой требуется вернуть.
+    :param language: язык, на который будет переведена строка
     :return:  строка, возвращающая день недели.
     """
     date_str: str = dt.strftime('%A')
     translator = Translator()
-    date_str = translator.translate(date_str, dest=language).text
-    return date_str
+    if language in googletrans.LANGUAGES:
+        date_str = translator.translate(date_str, dest=language).text
+        return date_str
+    else:
+        return "Такого языка не существует"
