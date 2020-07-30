@@ -16,7 +16,7 @@ My server is able to execute 3 tasks:
 
 - Query, that returns the current day of the week (on server) 
 
-- Query, that returns the day of the week by entered date (year+month+day)
+- Request, that returns the day of the week by entered date (year+month+day)
 
 - Query, that returns the day of the week after entered time interval (days+hours+minutes+seconds)
 
@@ -39,7 +39,7 @@ To execute 1 query, you have to enter your server address in internet-browser
     
 To execute 2 query, enter the date
 
-    $
+    $http://127.0.0.1:8000/DbD?input_str=19%2F07%2F2020
     
 To execute 3 query, enter the time interval
 
