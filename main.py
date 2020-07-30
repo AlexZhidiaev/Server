@@ -18,7 +18,7 @@ def home():
 def return_day(language: str = 'en'):
     """
     Функция, возвращающая текущий день недели на сервере.
-    :param language : язык возвращаемой строки в сокращенном формате
+    :param language : язык возвращаемой строки в сокращенном формате.
     :return: строка, возвращающая день недели.
     """
     out: str = string_proc(datetime.now(), language)
@@ -31,7 +31,7 @@ def day_by_date(input_str: str, language: str = 'en'):
     Функция, возвращающая день недели указанного в параметрах дня.
 
     :param input_str: строка формата день/месяц/год.
-    :param language : язык возвращаемой строки в сокращенном формате
+    :param language : язык возвращаемой строки в сокращенном формате.
     :return: строка, возвращающая день недели.
     """
     input_arr = input_str.split("/")
