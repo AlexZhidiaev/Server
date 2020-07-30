@@ -11,7 +11,7 @@ app = FastAPI()
 
 @app.get('/')
 def home():
-    return {"Главная страница"}
+    return {"Гл.страница"}
 
 
 @app.get('/return/day')

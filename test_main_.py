@@ -9,14 +9,14 @@ client = TestClient(app)
 def test_return_day():
     response = client.get("return/day")
     assert response.status_code == 200
-    assert response.json() == "Wednesday"
+    assert response.json() == "Thursday"
 
 
 def test_day_by_added_date_true():
     response = client.get("http://127.0.0.1:8000/DbaD?year=1&month=1&language=en")
     # response.json == {'year': 1, 'month': 1, 'language': "en"}
     assert response.status_code == 200
-    assert response.json() == "Friday"
+    assert response.json() == "Saturday"
 
 
 def test_day_by_date_true():
