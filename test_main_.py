@@ -10,7 +10,7 @@ client = TestClient(main.app)
 def test_return_day():
     response = client.get("return/day")
     assert response.status_code == 200
-    assert response.json() == main.return_day
+    assert response.json() == main.return_day()
 
 
 def test_day_by_added_date_true():
