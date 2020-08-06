@@ -26,7 +26,7 @@ def return_day(language: str = 'en'):
     return out
 
 
-@app.post('/DbD')
+@app.post('/day/byDate')
 def day_by_date(input_str: str, language: str = 'en'):
     """
     Функция, возвращающая день недели указанного в параметрах дня.
@@ -41,7 +41,7 @@ def day_by_date(input_str: str, language: str = 'en'):
     return out
 
 
-@app.get('/DbaD')
+@app.get('/day/byAddedDate')
 def day_by_added_date(year: int = 0, month: int = 0, week: int = 0, day: int = 0, hour: int = 0, minute: int = 0,
                       second: int = 0, language: str = 'en'):
     """

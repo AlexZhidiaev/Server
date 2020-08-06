@@ -1,6 +1,7 @@
 from datetime import datetime
 import googletrans
 from googletrans import Translator
+import urllib
 
 
 def leap_year(year: int):
@@ -52,9 +53,18 @@ def string_proc(dt: datetime, language: str):
     :return:  строка, возвращающая день недели.
     """
     date_str: str = dt.strftime('%A')
-    translator = Translator()
-    if language in googletrans.LANGUAGES:
-        date_str = translator.translate(date_str, dest=language).text
-        return date_str
-    else:
-        return "Такого языка не существует"
+    if connected():
+        translator = Translator()
+        if language in googletrans.LANGUAGES:
+            date_str = translator.translate(date_str, dest=language).text
+        else:
+            date_str = "Такого языка не существует"
+    return date_str
+
+
+def connected(host: str = 'http://google.com'):
+    try:
+        urllib.request.urlopen(host)
+        return True
+    except:
+        return False

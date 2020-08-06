@@ -2,10 +2,9 @@ from datetime import datetime
 
 from fastapi.testclient import TestClient
 import functions
-from main import app
+import main
 
-
-client = TestClient(app)
+client = TestClient(main.app)
 
 
 def test_return_day():
@@ -18,13 +17,13 @@ def test_day_by_added_date_true():
     response = client.get("http://127.0.0.1:8000/DbaD?year=1&month=1&language=en")
     # response.json == {'year': 1, 'month': 1, 'language': "en"}
     assert response.status_code == 200
-    assert response.json() == "Friday"
+    assert response.json() == main.day_by_added_date(1, 1)
 
 
 def test_day_by_date_true():
     response = client.post("http://127.0.0.1:8000/DbD?input_str=28%2F07%2F2020&language=en")
     assert response.status_code == 200
-    assert response.json() == "Tuesday"
+    assert response.json() == main.day_by_date('28/07/2020')
 
 
 def test_leap_year():
